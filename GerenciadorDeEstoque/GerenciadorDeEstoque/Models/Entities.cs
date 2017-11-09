@@ -9,6 +9,6 @@ namespace GerenciadorDeEstoque.Models
     public class Entities : DbContext
     {
         public DbSet<Empresa> Empresas { get; set; }
-
+        public DbSet<Categoria> Categorias { get; set; }
     }
 }
