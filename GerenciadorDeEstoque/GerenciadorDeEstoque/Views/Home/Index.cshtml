@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Início";
+}
+
+<h3>@Html.ViewBag.Title</h3>
+
+
+@Html.ActionLink("Fornecedores", "Index", "Fornecedor", "Fornecedor", new { @class = "btn btn-primary" })
+@Html.ActionLink("Produtos", "Index", "Produto", "Produto", new { @class = "btn btn-primary" })
