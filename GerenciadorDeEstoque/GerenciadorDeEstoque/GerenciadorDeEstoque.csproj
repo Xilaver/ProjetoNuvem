@@ -164,12 +164,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAL\CategoriaDAO.cs" />
+    <Compile Include="DAL\EmpresaDAO.cs" />
+    <Compile Include="DAL\FornecedorDAO.cs" />
+    <Compile Include="DAL\ItensEmpresaDAO.cs" />
+    <Compile Include="DAL\ProdutoDAO.cs" />
+    <Compile Include="DAL\Singleton.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\Entities.cs" />
+    <Compile Include="Models\Fornecedor.cs" />
+    <Compile Include="Models\ItensEmpresa.cs" />
+    <Compile Include="Models\Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
