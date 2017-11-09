@@ -40,8 +40,8 @@ namespace GerenciadorDeEstoque.Models
         [Required(ErrorMessage = "Campo obrigatório!")]
         [MinLength(5, ErrorMessage = "No mínimo 5 caracteres")]
         [MaxLength(20, ErrorMessage = "No maximo 20 caracteres")]
-        [Display(Name = "Usuário")]
-        public string usuario { get; set; }
+        [Display(Name = "Login")]
+        public string login { get; set; }
 
 
         [Required(ErrorMessage = "Campo obrigatório!")]
@@ -49,6 +49,6 @@ namespace GerenciadorDeEstoque.Models
         [MaxLength(20, ErrorMessage = "No maximo 20 caracteres")]
         [Display(Name = "Senha")]
         [DataType(DataType.Password)]
-        public string Senha { get; set; }
+        public string senha { get; set; }
     }
 }
