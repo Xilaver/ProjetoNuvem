@@ -17,28 +17,25 @@ namespace GerenciadorDeEstoque.Controllers
         // GET: Produto
         public ActionResult Index()
         {
-            return View(db.Produtos.ToList());
+           
+                return View(ProdutoDAO.ListarProdutos());
+           
         }
 
-        // GET: Produto/Details/5
-        public ActionResult Details(int? id)
+        [HttpPost]
+        public ActionResult Index(Produto p)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Produto produto = db.Produtos.Find(id);
-            if (produto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(produto);
+            return View(p);
         }
 
         // GET: Produto/Create
         public ActionResult Create()
         {
-            return View();
+            Produto produto = new Produto();
+            return View(produto);
+
+
+
         }
 
         // POST: Produto/Create
@@ -48,13 +45,40 @@ namespace GerenciadorDeEstoque.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Nome,Quantidade")] Produto produto)
         {
+
             if (ModelState.IsValid)
             {
-                db.Produtos.Add(produto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                
+
+                if(ProdutoDAO.CadastrarProduto(produto))
+                {
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Já existe um produto com o mesmo nome!");
+                }
             }
 
+            return View(produto);
+        }
+
+        // GET: Produto/Details/5
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Produto produto = ProdutoDAO.BuscarProdutoPorId(id);
+
+           
+
+            if (produto == null)
+            {
+                return HttpNotFound();
+            }
             return View(produto);
         }
 
@@ -65,7 +89,9 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtos.Find(id);
+            Produto produto = ProdutoDAO.BuscarProdutoPorId(id);
+
+
             if (produto == null)
             {
                 return HttpNotFound();
@@ -82,10 +108,18 @@ namespace GerenciadorDeEstoque.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(produto).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                Produto produtoAux = ProdutoDAO.BuscarProdutoPorId(produto.ProdutoId);
+                produtoAux.Nome = produto.Nome;
+                produtoAux.Quantidade = produto.Quantidade;
+
+                if (ProdutoDAO.AlterarProduto(produtoAux))
+                {
+                    return RedirectToAction("Index");
+                }
+
             }
+
             return View(produto);
         }
 
@@ -96,7 +130,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtos.Find(id);
+            Produto produto = ProdutoDAO.BuscarProdutoPorId(id);
             if (produto == null)
             {
                 return HttpNotFound();
@@ -109,19 +143,12 @@ namespace GerenciadorDeEstoque.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Produto produto = db.Produtos.Find(id);
-            db.Produtos.Remove(produto);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            Produto produto = ProdutoDAO.BuscarProdutoPorId(id);
+            if (ProdutoDAO.ExcluirProduto(produto))
             {
-                db.Dispose();
+                return RedirectToAction("Index");
             }
-            base.Dispose(disposing);
+            return RedirectToAction("Index");
         }
     }
 }
