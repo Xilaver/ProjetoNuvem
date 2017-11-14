@@ -62,7 +62,7 @@ namespace GerenciadorDeEstoque.DAL
                 entities.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

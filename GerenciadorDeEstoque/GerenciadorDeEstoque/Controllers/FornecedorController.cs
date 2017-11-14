@@ -27,7 +27,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fornecedor fornecedor = db.Fornecedors.Find(id);
+            Fornecedor fornecedor = db.Fornecedores.Find(id);
             if (fornecedor == null)
             {
                 return HttpNotFound();
