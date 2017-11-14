@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GerenciadorDeEstoque.Models;
+using GerenciadorDeEstoque.DAL;
 
 namespace GerenciadorDeEstoque.Controllers
 {
@@ -109,7 +110,7 @@ namespace GerenciadorDeEstoque.Controllers
             if (ModelState.IsValid)
             {
 
-                Produto produtoAux = ProdutoDAO.BuscarProdutoPorId(produto.ProdutoId);
+                Produto produtoAux = ProdutoDAO.BuscarProdutoPorId(produto.Id);
                 produtoAux.Nome = produto.Nome;
                 produtoAux.Quantidade = produto.Quantidade;
 
