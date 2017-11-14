@@ -21,13 +21,13 @@ namespace GerenciadorDeEstoque.Controllers
         }
 
         // GET: Empresa/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
+            Empresa empresa = db.Empresas.Find(Id);
             if (empresa == null)
             {
                 return HttpNotFound();
@@ -46,7 +46,7 @@ namespace GerenciadorDeEstoque.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,nome,cnpj,telefone,email,usuario,Senha")] Empresa empresa)
+        public ActionResult Create([Bind(Include = "Id,Nome,Cnpj,Telefone,Email,Usuario,Senha")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
@@ -59,13 +59,13 @@ namespace GerenciadorDeEstoque.Controllers
         }
 
         // GET: Empresa/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
+            Empresa empresa = db.Empresas.Find(Id);
             if (empresa == null)
             {
                 return HttpNotFound();
@@ -78,7 +78,7 @@ namespace GerenciadorDeEstoque.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,nome,cnpj,telefone,email,usuario,Senha")] Empresa empresa)
+        public ActionResult Edit([Bind(Include = "Id,Nome,Cnpj,Telefone,Email,Usuario,Senha")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
@@ -90,13 +90,13 @@ namespace GerenciadorDeEstoque.Controllers
         }
 
         // GET: Empresa/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? Id)
         {
-            if (id == null)
+            if (Id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Empresa empresa = db.Empresas.Find(id);
+            Empresa empresa = db.Empresas.Find(Id);
             if (empresa == null)
             {
                 return HttpNotFound();
@@ -107,21 +107,21 @@ namespace GerenciadorDeEstoque.Controllers
         // POST: Empresa/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int Id)
         {
-            Empresa empresa = db.Empresas.Find(id);
+            Empresa empresa = db.Empresas.Find(Id);
             db.Empresas.Remove(empresa);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
