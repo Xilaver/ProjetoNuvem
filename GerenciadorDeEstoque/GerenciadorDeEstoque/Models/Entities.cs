@@ -15,5 +15,5 @@ namespace GerenciadorDeEstoque.Models
 
         public DbSet<Fornecedor> Fornecedores { get; set; }
     }
-
+}
       
