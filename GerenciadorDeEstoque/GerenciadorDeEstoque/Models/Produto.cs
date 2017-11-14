@@ -26,6 +26,7 @@ namespace GerenciadorDeEstoque.Models
         public Fornecedor Fornecedor { get; set; }
 
         public Categoria Categoria { get; set; }
-
+        
+        //HUm..
     }
 }
