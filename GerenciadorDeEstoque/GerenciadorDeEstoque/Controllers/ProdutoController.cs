@@ -17,7 +17,7 @@ namespace GerenciadorDeEstoque.Controllers
         // GET: Produto
         public ActionResult Index()
         {
-            return View(db.Produtoes.ToList());
+            return View(db.Produtos.ToList());
         }
 
         // GET: Produto/Details/5
@@ -27,7 +27,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtoes.Find(id);
+            Produto produto = db.Produtos.Find(id);
             if (produto == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace GerenciadorDeEstoque.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Produtoes.Add(produto);
+                db.Produtos.Add(produto);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtoes.Find(id);
+            Produto produto = db.Produtos.Find(id);
             if (produto == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtoes.Find(id);
+            Produto produto = db.Produtos.Find(id);
             if (produto == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace GerenciadorDeEstoque.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Produto produto = db.Produtoes.Find(id);
-            db.Produtoes.Remove(produto);
+            Produto produto = db.Produtos.Find(id);
+            db.Produtos.Remove(produto);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
