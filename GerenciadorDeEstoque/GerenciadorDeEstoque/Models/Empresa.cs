@@ -11,37 +11,37 @@ namespace GerenciadorDeEstoque.Models
     public class Empresa
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]
         [MinLength(5, ErrorMessage = "No mínimo 5 caracteres")]
         [MaxLength(50, ErrorMessage = "No maximo 50 caracteres")]
         [Display(Name = "Nome")]
-        public string nome { get; set; }
+        public string Nome { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]
         [MinLength(5, ErrorMessage = "No mínimo 11 caracteres")]
         [MaxLength(50, ErrorMessage = "No maximo 15 caracteres")]
         [Display(Name = "Cnpj")]
-        public string cnpj { get; set; }
+        public string Cnpj { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]
         [MinLength(5, ErrorMessage = "No mínimo 8 caracteres")]
         [MaxLength(12, ErrorMessage = "No maximo 12 caracteres")]
         [Display(Name = "Telefone")]
         [DataType(DataType.PhoneNumber)]
-        public string telefone { get; set; }
+        public string Telefone { get; set; }
 
 
         [Display(Name = "Email do Cliente")]
         [DataType(DataType.EmailAddress)]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]
         [MinLength(5, ErrorMessage = "No mínimo 5 caracteres")]
         [MaxLength(20, ErrorMessage = "No maximo 20 caracteres")]
         [Display(Name = "Login")]
-        public string login { get; set; }
+        public string Login { get; set; }
 
 
         [Required(ErrorMessage = "Campo obrigatório!")]
@@ -49,6 +49,6 @@ namespace GerenciadorDeEstoque.Models
         [MaxLength(20, ErrorMessage = "No maximo 20 caracteres")]
         [Display(Name = "Senha")]
         [DataType(DataType.Password)]
-        public string senha { get; set; }
+        public string Senha { get; set; }
     }
 }

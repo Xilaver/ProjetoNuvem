@@ -11,12 +11,12 @@ namespace GerenciadorDeEstoque.Models
     public class Categoria
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]
         [MaxLength(40, ErrorMessage = "No maximo 40 caracteres")]
         [Display(Name = "Nome da Categoria")]
-        public string nome { get; set; }
+        public string Nome { get; set; }
 
     }
 }

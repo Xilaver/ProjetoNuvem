@@ -11,7 +11,7 @@ namespace GerenciadorDeEstoque.Models
     public class Produto
     {
         [Key]
-        public int ProdutoId { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]
         [Display(Name = "Nome do Produto")]
@@ -27,6 +27,6 @@ namespace GerenciadorDeEstoque.Models
 
         public Categoria Categoria { get; set; }
         
-        //HUm..
+        
     }
 }
