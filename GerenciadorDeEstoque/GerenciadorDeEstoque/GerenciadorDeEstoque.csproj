@@ -183,7 +183,6 @@
     <Compile Include="Models\Empresa.cs" />
     <Compile Include="Models\Entities.cs" />
     <Compile Include="Models\Fornecedor.cs" />
-    <Compile Include="Models\ItensEmpresa.cs" />
     <Compile Include="Models\Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
