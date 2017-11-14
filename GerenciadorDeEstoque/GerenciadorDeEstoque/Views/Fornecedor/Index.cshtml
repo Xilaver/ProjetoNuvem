@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GerenciadorDeEstoque.Models.Empresa>
+﻿@model IEnumerable<GerenciadorDeEstoque.Models.Fornecedor>
 
 @{
     ViewBag.Title = "Index";
@@ -24,10 +24,16 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Login)
+            @Html.DisplayNameFor(model => model.Endereco)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Senha)
+            @Html.DisplayNameFor(model => model.Cep)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
         </th>
         <th></th>
     </tr>
@@ -47,10 +53,16 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Login)
+            @Html.DisplayFor(modelItem => item.Endereco)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Senha)
+            @Html.DisplayFor(modelItem => item.Cep)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cidade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
