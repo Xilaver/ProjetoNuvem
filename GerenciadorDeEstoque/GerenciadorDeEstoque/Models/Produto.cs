@@ -25,7 +25,7 @@ namespace GerenciadorDeEstoque.Models
         [Display(Name = "Nome do Produto")]
         public Fornecedor Fornecedor { get; set; }
 
-        public List<Categoria> Categorias { get; set; }
+        public Categoria Categoria { get; set; }
 
     }
 }
