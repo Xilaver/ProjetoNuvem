@@ -17,13 +17,14 @@ namespace GerenciadorDeEstoque.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index([Bind(Include = "Login,Senha")] Empresa empresa)
+        public ActionResult Index(string txtLogin, string txtSenha)
         {
-            Empresa usuario = new Empresa();
+            Empresa empresa = new Empresa();
 
-            
+            empresa.Login = txtLogin;
+            empresa.Senha = txtSenha;
 
-            if (EmpresaDAO.Login(usuario))
+            if (EmpresaDAO.Login(empresa))
             {
                 return RedirectToAction("Index", "Home");
             }

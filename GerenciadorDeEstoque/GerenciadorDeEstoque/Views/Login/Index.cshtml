@@ -29,16 +29,18 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })
+                            @*@Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.TextBox("txtLogin", null, new { @class = "form-control", @placeholder = "Digite aqui o seu nome" })
+                            @*@Html.ValidationMessageFor(model => model.Login, "", new { @class = "text-danger" })*@
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                            @Html.TextBox("txtSenha", null, new { @class = "form-control", @placeholder = "Digite aqui a sua senha", @Type = "Password" })
+                            @*@Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })*@
                         </div>
                     </div>
 

@@ -11,17 +11,17 @@ namespace GerenciadorDeEstoque.DAL
         private static Entities entities = Singleton.Instance.Entities;
 
 
-        public static Empresa BuscarEmpresaPorLoginESenha(Empresa Empresa)
+        public static Empresa BuscarEmpresaPorLoginESenha(Empresa empresa)
         {
-            return entities.Empresas.FirstOrDefault(x => x.Nome.Equals(Empresa.Nome) && x.Senha.Equals(Empresa.Senha));
+            return entities.Empresas.FirstOrDefault(x => x.Login.Equals(empresa.Login) && x.Senha.Equals(empresa.Senha));
         }
-        public static bool Login(Empresa Empresa)
+        public static bool Login(Empresa empresa)
         {
-            if (EmpresaDAO.BuscarEmpresaPorLoginESenha(Empresa) != null)
+            if (EmpresaDAO.BuscarEmpresaPorLoginESenha(empresa) != null)
             {
                 if (HttpContext.Current.Session["Login"] == null)
                 {
-                    HttpContext.Current.Session["Login"] = Empresa.Nome;
+                    HttpContext.Current.Session["Login"] = empresa.Nome;
                     return true;
                 }
                 return true;
