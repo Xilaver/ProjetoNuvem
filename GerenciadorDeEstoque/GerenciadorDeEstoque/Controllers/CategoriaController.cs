@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GerenciadorDeEstoque.Models;
+using GerenciadorDeEstoque.DAL;
 
 namespace GerenciadorDeEstoque.Controllers
 {
@@ -17,7 +18,14 @@ namespace GerenciadorDeEstoque.Controllers
         // GET: Categoria
         public ActionResult Index()
         {
-            return View(db.Categorias.ToList());
+            if (EmpresaDAO.EstaLogado())
+            {
+                return View(db.Categorias.ToList());
+            }else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            
         }
 
         // GET: Categoria/Details/5

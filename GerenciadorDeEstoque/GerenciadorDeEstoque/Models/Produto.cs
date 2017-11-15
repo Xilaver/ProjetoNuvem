@@ -21,12 +21,9 @@ namespace GerenciadorDeEstoque.Models
         [Display(Name = "Quantidade de Produto")]
         public int Quantidade { get; set; }
 
-        
-
         public Fornecedor Fornecedor { get; set; }
 
         public Categoria Categoria { get; set; }
-        
-        
+
     }
 }

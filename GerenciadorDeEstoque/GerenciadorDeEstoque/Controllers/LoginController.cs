@@ -19,12 +19,12 @@ namespace GerenciadorDeEstoque.Controllers
         [HttpPost]
         public ActionResult Index(string txtLogin, string txtSenha)
         {
-            Empresa empresa = new Empresa();
+            Empresa Empresa = new Empresa();
 
-            empresa.Login = txtLogin;
-            empresa.Senha = txtSenha;
+            Empresa.Login = txtLogin;
+            Empresa.Senha = txtSenha;
 
-            if (EmpresaDAO.Login(empresa))
+            if (EmpresaDAO.Login(Empresa))
             {
                 return RedirectToAction("Index", "Home");
             }

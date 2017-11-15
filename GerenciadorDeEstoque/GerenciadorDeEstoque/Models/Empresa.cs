@@ -50,5 +50,9 @@ namespace GerenciadorDeEstoque.Models
         [Display(Name = "Senha")]
         [DataType(DataType.Password)]
         public string Senha { get; set; }
+
+        public List<Categoria> Categorias { get; set; }
+        public List<Fornecedor> Fornecedores { get; set; }
+        public List<Produto> Produtos { get; set; }
     }
 }
