@@ -51,7 +51,7 @@ namespace GerenciadorDeEstoque.DAL
         public static Produto BuscarProdutoPorId(int? id)
         {
             
-            return entities.Produtos.Include("Ingredientes").FirstOrDefault(x => x.Id == id);
+            return entities.Produtos.Include("Categoria").Include("Fornecedor").FirstOrDefault(x => x.Id == id);
         }
 
         public static bool AlterarProduto(Produto Produto)
