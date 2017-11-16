@@ -49,6 +49,12 @@ namespace GerenciadorDeEstoque.DAL
             return entities.Empresas.Find(id);
         }
 
+        public static Empresa BuscarEmpresaPorLogin()
+        {
+            string login = HttpContext.Current.Session["Login"].ToString();
+            return entities.Empresas.FirstOrDefault(x => x.Login.Equals(login));
+        }
+
         public static bool Alterarempresa(Empresa Empresa)
         {
             try

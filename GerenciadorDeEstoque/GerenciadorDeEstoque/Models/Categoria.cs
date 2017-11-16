@@ -18,5 +18,7 @@ namespace GerenciadorDeEstoque.Models
         [Display(Name = "Nome da Categoria")]
         public string Nome { get; set; }
 
+        public Empresa Empresa { get; set; }
+
     }
 }

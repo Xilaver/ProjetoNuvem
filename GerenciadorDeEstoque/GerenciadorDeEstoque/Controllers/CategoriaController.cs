@@ -1,135 +1,84 @@
-﻿using System;
+﻿using GerenciadorDeEstoque.Models;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web;
-using System.Web.Mvc;
-using GerenciadorDeEstoque.Models;
-using GerenciadorDeEstoque.DAL;
 
-namespace GerenciadorDeEstoque.Controllers
+namespace GerenciadorDeEstoque.DAL
 {
-    public class CategoriaController : Controller
+    public class CategoriaDAO
     {
-        private Entities db = new Entities();
 
-        // GET: Categoria
-        public ActionResult Index()
+        private static Entities entities = Singleton.Instance.Entities;
+
+        public static List<Categoria> ListarCategoriasPorLogin(/*Empresa empresa*/)
         {
-            if (EmpresaDAO.EstaLogado())
-            {
-                return View(db.Categorias.ToList());
-            }else
-            {
-                return RedirectToAction("Index", "Login");
-            }
-            
+            return entities.Categorias.ToList();
         }
 
-        // GET: Categoria/Details/5
-        public ActionResult Details(int? id)
+        public static bool CadastrarCategoria(Categoria Categoria)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Categoria categoria = db.Categorias.Find(id);
-            if (categoria == null)
-            {
-                return HttpNotFound();
-            }
-            return View(categoria);
-        }
+                if (BuscarCategoriaPorTitulo(Categoria) == null)
+                {
+                    entities.Categorias.Add(Categoria);
+                    entities.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
-        // GET: Categoria/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Categoria/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,nome")] Categoria categoria)
-        {
-            if (ModelState.IsValid)
+            }
+            catch (Exception)
             {
-                db.Categorias.Add(categoria);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return false;
             }
 
-            return View(categoria);
         }
 
-        // GET: Categoria/Edit/5
-        public ActionResult Edit(int? id)
+        public static Categoria BuscarCategoriaPorTitulo(Categoria Categoria)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Categoria categoria = db.Categorias.Find(id);
-            if (categoria == null)
-            {
-                return HttpNotFound();
-            }
-            return View(categoria);
+            return entities.Categorias.FirstOrDefault(x => x.Nome.Equals(Categoria.Nome));
         }
 
-        // POST: Categoria/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,nome")] Categoria categoria)
+        public static Categoria BuscarCategoriaPorId(int? id)
         {
-            if (ModelState.IsValid)
-            {
-                db.Entry(categoria).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(categoria);
+            return entities.Categorias.Find(id);
         }
 
-        // GET: Categoria/Delete/5
-        public ActionResult Delete(int? id)
+        public static bool AlterarCategoria(Categoria Categoria)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                entities.Entry(Categoria).State = EntityState.Modified;
+                entities.SaveChanges();
+                return true;
             }
-            Categoria categoria = db.Categorias.Find(id);
-            if (categoria == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return false;
             }
-            return View(categoria);
+
         }
 
-        // POST: Categoria/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public static bool ExcluirCategoria(Categoria Categoria)
         {
-            Categoria categoria = db.Categorias.Find(id);
-            db.Categorias.Remove(categoria);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                entities.Categorias.Remove(Categoria);
+                entities.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
     }
 }
