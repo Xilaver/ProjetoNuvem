@@ -13,7 +13,7 @@ namespace GerenciadorDeEstoque.Controllers
 {
     public class CategoriaController : Controller
     {
-        private Entities db = new Entities();
+        //private Entities db = new Entities();
 
         // GET: Categoria
         public ActionResult Index()
@@ -23,7 +23,7 @@ namespace GerenciadorDeEstoque.Controllers
                 Empresa empresa = new Empresa();
                 empresa = EmpresaDAO.BuscarEmpresaPorLogin();
 
-                return View(CategoriaDAO.ListarCategoriasPorLogin(empresa)/*db.Categorias.ToList()*/);
+                return View(CategoriaDAO.ListarCategoriasPorLogin(empresa));
             }
             else
             {
@@ -39,7 +39,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = CategoriaDAO.BuscarCategoriaPorId(id);/*db.Categorias.Find(id);*/
+            Categoria categoria = CategoriaDAO.BuscarCategoriaPorId(id);
             if (categoria == null)
             {
                 return HttpNotFound();
@@ -64,26 +64,18 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 Empresa empresa = new Empresa();
                 var list = new List<Categoria>();
-                //var listAux = new List<Categoria>();
 
                 empresa = EmpresaDAO.BuscarEmpresaPorLogin();
-                //listAux = empresa.Categorias;
                 categoria.Empresa = empresa;
 
-                //for (int i = 0; i<)
-                //{
-                    if (empresa.Categorias != null)
-                    {
-                        list = empresa.Categorias;
-                    }
-
-                //}
+                if (empresa.Categorias != null)
+                {
+                    list = empresa.Categorias;
+                }
 
                 list.Add(categoria);
                 empresa.Categorias = list;
                 EmpresaDAO.Alterarempresa(empresa);
-                //db.Categorias.Add(categoria);
-                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -97,7 +89,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categorias.Find(id);
+            Categoria categoria = CategoriaDAO.BuscarCategoriaPorId(id);
             if (categoria == null)
             {
                 return HttpNotFound();
@@ -110,13 +102,16 @@ namespace GerenciadorDeEstoque.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,nome")] Categoria categoria)
+        public ActionResult Edit([Bind(Include = "Id,Nome")] Categoria categoria)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(categoria).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Categoria categoriaAux = CategoriaDAO.BuscarCategoriaPorId(categoria.Id);
+                categoriaAux.Nome = categoria.Nome;
+                if (CategoriaDAO.AlterarCategoria(categoriaAux))
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return View(categoria);
         }
@@ -128,7 +123,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categorias.Find(id);
+            Categoria categoria = CategoriaDAO.BuscarCategoriaPorId(id);
             if (categoria == null)
             {
                 return HttpNotFound();
@@ -141,19 +136,18 @@ namespace GerenciadorDeEstoque.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Categoria categoria = db.Categorias.Find(id);
-            db.Categorias.Remove(categoria);
-            db.SaveChanges();
+            Categoria categoria = CategoriaDAO.BuscarCategoriaPorId(id);
+            CategoriaDAO.ExcluirCategoria(categoria);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

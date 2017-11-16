@@ -48,6 +48,8 @@ namespace GerenciadorDeEstoque.DAL
         public static Categoria BuscarCategoriaPorId(int? id)
         {
             return entities.Categorias.Find(id);
+
+            //return entities.Categorias.Include("Empresa").FirstOrDefault(x => x.Id == id);
         }
 
         public static bool AlterarCategoria(Categoria Categoria)
@@ -58,7 +60,7 @@ namespace GerenciadorDeEstoque.DAL
                 entities.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
