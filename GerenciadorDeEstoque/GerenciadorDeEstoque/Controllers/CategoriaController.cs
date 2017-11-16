@@ -64,16 +64,21 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 Empresa empresa = new Empresa();
                 var list = new List<Categoria>();
-                var listAux = new List<Categoria>();
+                //var listAux = new List<Categoria>();
 
                 empresa = EmpresaDAO.BuscarEmpresaPorLogin();
                 //listAux = empresa.Categorias;
                 categoria.Empresa = empresa;
-                if(list != null)
-                {
-                    list = empresa.Categorias;
-                }
-                
+
+                //for (int i = 0; i<)
+                //{
+                    if (empresa.Categorias != null)
+                    {
+                        list = empresa.Categorias;
+                    }
+
+                //}
+
                 list.Add(categoria);
                 empresa.Categorias = list;
                 EmpresaDAO.Alterarempresa(empresa);
