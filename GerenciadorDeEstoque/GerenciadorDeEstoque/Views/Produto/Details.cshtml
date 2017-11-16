@@ -9,40 +9,33 @@
 <div>
     <h4>Produto</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
+    <div class="dl-horizontal">
 
-        <dd>
+        <div class="panel-heading">
+
+            @Html.DisplayName("Número do produto"):
+            @Html.DisplayFor(model => model.Id) -
+           
+        </div>
+       
+        <div class="panel-body">
+            @Html.DisplayNameFor(model => model.Nome):
             @Html.DisplayFor(model => model.Nome)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantidade)
-        </dt>
-
-        <dd>
+        </div>
+        <div class="panel-body">
+            @Html.DisplayNameFor(model => model.Quantidade):
             @Html.DisplayFor(model => model.Quantidade)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Fornecedor)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fornecedor)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
-
-    </dl>
+        </div>
+        <div class="panel-footer">
+            @Html.DisplayNameFor(model => model.Fornecedor):
+            @Html.DisplayFor(model => model.Fornecedor.Nome)
+        </div>
+        <div class="panel-footer">
+            @Html.DisplayNameFor(model => model.Categoria):
+            @Html.DisplayFor(model => model.Categoria.Nome)
+        </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", "Produto", new { id = Model.Id}, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Voltar", "Index", "Produto", new { @class = "btn btn-primary" })
 </p>
