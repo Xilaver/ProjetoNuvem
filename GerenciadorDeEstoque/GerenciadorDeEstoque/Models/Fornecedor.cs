@@ -27,7 +27,7 @@ namespace GerenciadorDeEstoque.Models
         public string  Telefone { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]
-        [Display(Name = "Nome")]
+        [Display(Name = "Email")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
