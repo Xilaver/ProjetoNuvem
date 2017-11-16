@@ -23,7 +23,7 @@ namespace GerenciadorDeEstoque.Controllers
                 Empresa empresa = new Empresa();
                 empresa = EmpresaDAO.BuscarEmpresaPorLogin();
 
-                return View(db.Categorias.ToList());
+                return View(CategoriaDAO.ListarCategoriasPorLogin(empresa)/*db.Categorias.ToList()*/);
             }
             else
             {
@@ -64,14 +64,22 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 Empresa empresa = new Empresa();
                 var list = new List<Categoria>();
+                var listAux = new List<Categoria>();
 
                 empresa = EmpresaDAO.BuscarEmpresaPorLogin();
+                //listAux = empresa.Categorias;
+                categoria.Empresa = empresa;
+                if(list != null)
+                {
+                    list = empresa.Categorias;
+                }
+                
                 list.Add(categoria);
                 empresa.Categorias = list;
                 EmpresaDAO.Alterarempresa(empresa);
                 //db.Categorias.Add(categoria);
                 //db.SaveChanges();
-                //return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
 
             return View(categoria);

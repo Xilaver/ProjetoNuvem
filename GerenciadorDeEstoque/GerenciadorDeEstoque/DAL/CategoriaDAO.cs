@@ -12,9 +12,9 @@ namespace GerenciadorDeEstoque.DAL
 
         private static Entities entities = Singleton.Instance.Entities;
 
-        public static List<Categoria> ListarCategoriasPorLogin(/*Empresa empresa*/)
+        public static List<Categoria> ListarCategoriasPorLogin(Empresa empresa)
         {
-            return entities.Categorias.ToList();
+            return entities.Categorias.Include("Empresa").Where(x=> x.Empresa.Id.Equals(empresa.Id)).ToList();
         }
 
         public static bool CadastrarCategoria(Categoria Categoria)
