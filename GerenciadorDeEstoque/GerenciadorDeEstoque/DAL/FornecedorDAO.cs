@@ -11,9 +11,9 @@ namespace GerenciadorDeEstoque.DAL
     {
         private static Entities entities = Singleton.Instance.Entities;
 
-        public static List<Fornecedor> ListarFornecedores()
+        public static List<Fornecedor> ListarFornecedoresPorLogin(Empresa empresa)
         {
-            return entities.Fornecedores.ToList();
+            return entities.Fornecedores.Include("Empresa").Where(x => x.Empresa.Id.Equals(empresa.Id)).ToList();
         }
 
         public static bool CadastrarFornecedores(Fornecedor Fornecedor)
@@ -49,8 +49,9 @@ namespace GerenciadorDeEstoque.DAL
 
         public static Fornecedor BuscarFornecedorPorId(int? id)
         {
+            return entities.Fornecedores.Find(id);
 
-            return entities.Fornecedores.Include("Fornecedor").FirstOrDefault(x => x.Id == id);
+            //return entities.Fornecedores.Include("Fornecedor").FirstOrDefault(x => x.Id == id);
         }
 
         public static bool AlterarFornecedor(Fornecedor Fornecedor)

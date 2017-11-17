@@ -7,17 +7,28 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GerenciadorDeEstoque.Models;
+using GerenciadorDeEstoque.DAL;
 
 namespace GerenciadorDeEstoque.Controllers
 {
     public class FornecedorController : Controller
     {
-        private Entities db = new Entities();
+        //private Entities db = new Entities();
 
         // GET: Fornecedor
         public ActionResult Index()
         {
-            return View(db.Fornecedores.ToList());
+            if (EmpresaDAO.EstaLogado())
+            {
+                Empresa empresa = new Empresa();
+                empresa = EmpresaDAO.BuscarEmpresaPorLogin();
+
+                return View(FornecedorDAO.ListarFornecedoresPorLogin(empresa));
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
 
         // GET: Fornecedor/Details/5
@@ -27,7 +38,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fornecedor fornecedor = db.Fornecedores.Find(id);
+            Fornecedor fornecedor = FornecedorDAO.BuscarFornecedorPorId(id);
             if (fornecedor == null)
             {
                 return HttpNotFound();
@@ -50,8 +61,20 @@ namespace GerenciadorDeEstoque.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Fornecedores.Add(fornecedor);
-                db.SaveChanges();
+                Empresa empresa = new Empresa();
+                var list = new List<Fornecedor>();
+
+                empresa = EmpresaDAO.BuscarEmpresaPorLogin();
+                fornecedor.Empresa = empresa;
+
+                if (empresa.Fornecedores != null)
+                {
+                    list = empresa.Fornecedores;
+                }
+
+                list.Add(fornecedor);
+                empresa.Fornecedores = list;
+                EmpresaDAO.Alterarempresa(empresa);
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +88,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fornecedor fornecedor = db.Fornecedores.Find(id);
+            Fornecedor fornecedor = FornecedorDAO.BuscarFornecedorPorId(id);
             if (fornecedor == null)
             {
                 return HttpNotFound();
@@ -82,8 +105,8 @@ namespace GerenciadorDeEstoque.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(fornecedor).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(fornecedor).State = EntityState.Modified;
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(fornecedor);
@@ -96,7 +119,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Fornecedor fornecedor = db.Fornecedores.Find(id);
+            Fornecedor fornecedor = FornecedorDAO.BuscarFornecedorPorId(id);
             if (fornecedor == null)
             {
                 return HttpNotFound();
@@ -109,19 +132,19 @@ namespace GerenciadorDeEstoque.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Fornecedor fornecedor = db.Fornecedores.Find(id);
-            db.Fornecedores.Remove(fornecedor);
-            db.SaveChanges();
+            //Fornecedor fornecedor = db.Fornecedores.Find(id);
+            //db.Fornecedores.Remove(fornecedor);
+            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GerenciadorDeEstoque.DAL;
+using GerenciadorDeEstoque.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;

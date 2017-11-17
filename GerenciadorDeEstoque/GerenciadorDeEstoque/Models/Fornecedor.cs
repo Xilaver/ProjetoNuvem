@@ -46,5 +46,6 @@ namespace GerenciadorDeEstoque.Models
         [Required(ErrorMessage = "Campo obrigatório!")]
         [Display(Name = "Estado")]
         public string Estado { get; set; }
+        public Empresa Empresa { get; set; }
     }
 }
