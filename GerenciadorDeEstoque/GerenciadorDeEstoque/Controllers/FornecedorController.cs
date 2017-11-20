@@ -105,9 +105,20 @@ namespace GerenciadorDeEstoque.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Entry(fornecedor).State = EntityState.Modified;
-                //db.SaveChanges();
-                return RedirectToAction("Index");
+                Fornecedor fornecedorAux = FornecedorDAO.BuscarFornecedorPorId(fornecedor.Id);
+                fornecedorAux.Nome = fornecedor.Nome;
+                fornecedorAux.Cnpj = fornecedor.Cnpj;
+                fornecedorAux.Telefone = fornecedor.Telefone;
+                fornecedorAux.Email = fornecedor.Email;
+                fornecedorAux.Endereco = fornecedor.Endereco;
+                fornecedorAux.Cep = fornecedor.Cep;
+                fornecedorAux.Cidade = fornecedor.Cidade;
+                fornecedorAux.Estado = fornecedor.Estado;
+                if (FornecedorDAO.AlterarFornecedor(fornecedorAux))
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
             return View(fornecedor);
         }
@@ -132,9 +143,8 @@ namespace GerenciadorDeEstoque.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            //Fornecedor fornecedor = db.Fornecedores.Find(id);
-            //db.Fornecedores.Remove(fornecedor);
-            //db.SaveChanges();
+            Fornecedor fornecedor = FornecedorDAO.BuscarFornecedorPorId(id);
+            FornecedorDAO.ExcluirFornecedor(fornecedor);
             return RedirectToAction("Index");
         }
 
