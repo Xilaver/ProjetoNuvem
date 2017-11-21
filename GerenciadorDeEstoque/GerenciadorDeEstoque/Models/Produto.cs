@@ -21,9 +21,15 @@ namespace GerenciadorDeEstoque.Models
         [Display(Name = "Quantidade de Produto")]
         public int Quantidade { get; set; }
 
-        public Fornecedor Fornecedor { get; set; }
+        public int FornecedorID { get; set; }
 
-        public Categoria Categoria { get; set; }
+        [ForeignKey("FornecedorID")]
+        public virtual Fornecedor Fornecedor { get; set; }
+
+        public int CategoriaID { get; set; }
+
+        [ForeignKey("CategoriaID")]
+        public virtual Categoria Categoria { get; set; }
 
     }
 }
