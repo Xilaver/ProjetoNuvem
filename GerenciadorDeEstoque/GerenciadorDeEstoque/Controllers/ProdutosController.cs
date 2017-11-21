@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GerenciadorDeEstoque.Models;
+using GerenciadorDeEstoque.DAL;
 
 namespace GerenciadorDeEstoque.Controllers
 {
@@ -17,8 +18,20 @@ namespace GerenciadorDeEstoque.Controllers
         // GET: Produtos
         public ActionResult Index()
         {
-            var produtos = db.Produtos.Include(p => p.Categoria).Include(p => p.Fornecedor);
-            return View(produtos.ToList());
+            if (EmpresaDAO.EstaLogado())
+            {
+                Empresa empresa = new Empresa();
+                empresa = EmpresaDAO.BuscarEmpresaPorLogin();
+
+                var produtos = db.Produtos.Include(p => p.Categoria).Include(p => p.Fornecedor);
+                return View(produtos.ToList());
+                //return View(CategoriaDAO.ListarCategoriasPorLogin(empresa));
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
         }
 
         // GET: Produtos/Details/5
@@ -124,13 +137,13 @@ namespace GerenciadorDeEstoque.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
