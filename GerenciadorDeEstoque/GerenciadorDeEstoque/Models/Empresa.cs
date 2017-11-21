@@ -16,7 +16,7 @@ namespace GerenciadorDeEstoque.Models
         [Required(ErrorMessage = "Campo obrigatório!")]
         [MinLength(5, ErrorMessage = "No mínimo 5 caracteres")]
         [MaxLength(50, ErrorMessage = "No maximo 50 caracteres")]
-        [Display(Name = "Nome")]
+        [Display(Name = "Nome da Empresa")]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]

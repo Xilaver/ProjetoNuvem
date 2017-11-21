@@ -14,7 +14,7 @@ namespace GerenciadorDeEstoque.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]
-        [Display(Name = "Nome")]
+        [Display(Name = "Nome do Fornecedor")]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório!")]

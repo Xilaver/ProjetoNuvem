@@ -31,5 +31,7 @@ namespace GerenciadorDeEstoque.Models
         [ForeignKey("CategoriaID")]
         public virtual Categoria Categoria { get; set; }
 
+        public Empresa Empresa { get; set; }
+
     }
 }

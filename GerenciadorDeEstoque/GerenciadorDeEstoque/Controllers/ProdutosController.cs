@@ -23,9 +23,9 @@ namespace GerenciadorDeEstoque.Controllers
                 Empresa empresa = new Empresa();
                 empresa = EmpresaDAO.BuscarEmpresaPorLogin();
 
-                var produtos = db.Produtos.Include(p => p.Categoria).Include(p => p.Fornecedor);
-                return View(produtos.ToList());
-                //return View(CategoriaDAO.ListarCategoriasPorLogin(empresa));
+                //var produtos = ProdutoDAO.ListarProdutosPorLogin(empresa);/*db.Produtos.Include(p => p.Categoria).Include(p => p.Fornecedor);*/
+                //return View(produtos.ToList());
+                return View(ProdutoDAO.ListarProdutosPorLogin(empresa));
             }
             else
             {
@@ -41,7 +41,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtos.Find(id);
+            Produto produto = ProdutoDAO.BuscarProdutoPorId(id);
             if (produto == null)
             {
                 return HttpNotFound();
@@ -52,8 +52,12 @@ namespace GerenciadorDeEstoque.Controllers
         // GET: Produtos/Create
         public ActionResult Create()
         {
-            ViewBag.CategoriaID = new SelectList(db.Categorias, "Id", "Nome");
-            ViewBag.FornecedorID = new SelectList(db.Fornecedores, "Id", "Nome");
+            Empresa empresa = new Empresa();
+            empresa = EmpresaDAO.BuscarEmpresaPorLogin();
+
+            ViewBag.CategoriaID = new SelectList(CategoriaDAO.ListarCategoriasPorLogin(empresa), "Id", "Nome");
+            ViewBag.FornecedorID = new SelectList(/*db.Fornecedores*/FornecedorDAO.ListarFornecedoresPorLogin(empresa), "Id", "Nome");
+
             return View();
         }
 
@@ -66,13 +70,27 @@ namespace GerenciadorDeEstoque.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Produtos.Add(produto);
-                db.SaveChanges();
+                Empresa empresa = new Empresa();
+                var list = new List<Produto>();
+
+                empresa = EmpresaDAO.BuscarEmpresaPorLogin();
+                produto.Empresa = empresa;
+
+                if (empresa.Produtos != null)
+                {
+                    list = empresa.Produtos;
+                }
+
+                list.Add(produto);
+                empresa.Produtos = list;
+                EmpresaDAO.Alterarempresa(empresa);
                 return RedirectToAction("Index");
             }
+            Empresa empre = new Empresa();
+            empre = EmpresaDAO.BuscarEmpresaPorLogin();
 
-            ViewBag.CategoriaID = new SelectList(db.Categorias, "Id", "Nome", produto.CategoriaID);
-            ViewBag.FornecedorID = new SelectList(db.Fornecedores, "Id", "Nome", produto.FornecedorID);
+            ViewBag.CategoriaID = new SelectList(CategoriaDAO.ListarCategoriasPorLogin(empre), "Id", "Nome", produto.CategoriaID);
+            ViewBag.FornecedorID = new SelectList(FornecedorDAO.ListarFornecedoresPorLogin(empre), "Id", "Nome", produto.FornecedorID);
             return View(produto);
         }
 
@@ -83,13 +101,16 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtos.Find(id);
+            Produto produto = ProdutoDAO.BuscarProdutoPorId(id);
             if (produto == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoriaID = new SelectList(db.Categorias, "Id", "Nome", produto.CategoriaID);
-            ViewBag.FornecedorID = new SelectList(db.Fornecedores, "Id", "Nome", produto.FornecedorID);
+            Empresa empresa = new Empresa();
+            empresa = EmpresaDAO.BuscarEmpresaPorLogin();
+
+            ViewBag.CategoriaID = new SelectList(CategoriaDAO.ListarCategoriasPorLogin(empresa), "Id", "Nome", produto.CategoriaID);
+            ViewBag.FornecedorID = new SelectList(FornecedorDAO.ListarFornecedoresPorLogin(empresa), "Id", "Nome", produto.FornecedorID);
             return View(produto);
         }
 
@@ -102,12 +123,21 @@ namespace GerenciadorDeEstoque.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(produto).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Produto produtoAux = ProdutoDAO.BuscarProdutoPorId(produto.Id);
+                produtoAux.Nome = produto.Nome;
+                produtoAux.Quantidade = produto.Quantidade;
+                produtoAux.FornecedorID = produto.FornecedorID;
+                produtoAux.CategoriaID = produto.CategoriaID;
+                if (ProdutoDAO.AlterarProduto(produtoAux))
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            ViewBag.CategoriaID = new SelectList(db.Categorias, "Id", "Nome", produto.CategoriaID);
-            ViewBag.FornecedorID = new SelectList(db.Fornecedores, "Id", "Nome", produto.FornecedorID);
+            Empresa empresa = new Empresa();
+            empresa = EmpresaDAO.BuscarEmpresaPorLogin();
+
+            ViewBag.CategoriaID = new SelectList(CategoriaDAO.ListarCategoriasPorLogin(empresa), "Id", "Nome", produto.CategoriaID);
+            ViewBag.FornecedorID = new SelectList(FornecedorDAO.ListarFornecedoresPorLogin(empresa), "Id", "Nome", produto.FornecedorID);
             return View(produto);
         }
 
@@ -118,7 +148,7 @@ namespace GerenciadorDeEstoque.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produto produto = db.Produtos.Find(id);
+            Produto produto = ProdutoDAO.BuscarProdutoPorId(id);
             if (produto == null)
             {
                 return HttpNotFound();
@@ -131,9 +161,8 @@ namespace GerenciadorDeEstoque.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Produto produto = db.Produtos.Find(id);
-            db.Produtos.Remove(produto);
-            db.SaveChanges();
+            Produto produto = ProdutoDAO.BuscarProdutoPorId(id);
+            ProdutoDAO.ExcluirProduto(produto);
             return RedirectToAction("Index");
         }
 
